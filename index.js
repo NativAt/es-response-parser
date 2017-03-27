@@ -103,7 +103,8 @@ function handleMetrics(next, first, agg, metric, metricName, pastAggregation) {
 
 function handleOneBucket(next, first, agg, bucket, key, pastAggregation) {
   if (!isBucket(bucket)) return next(agg, bucket, key, pastAggregation);
-  return reduceObj(first, agg.setDimensionValue(bucket.key), bucket, agg.setDimensionValue(bucket.key));
+  var initialKey = (bucket.key_as_string !== undefined ? "key_as_string" : "key");
+  return reduceObj(first, agg.setDimensionValue(bucket[initialKey]), bucket, agg.setDimensionValue(bucket.key));
 }
 
 function handleBuckets(next, first, agg, buckets, key, pastAggregation) {
